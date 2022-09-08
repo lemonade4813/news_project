@@ -24,6 +24,7 @@
       <main class="content">
         <section class="top-news-section">
           <h2>Top News 🏆️</h2>
+          <button class = "popupButton" type="button" onclick="showPopup();">새글 등록</button>
           <article id="topNewsList">
             <div class="spinner-area"></div>
           </article>
@@ -58,6 +59,9 @@
         </aside>
       </main>
       <footer>fe-post.com © 2020-2021 FE POST</footer>
+      <script language="javascript">
+        function showPopup() { window.open("popup.html", "a", "width=400, height=300, left=100, top=50"); }
+        </script>
     </div>
   </body>
   <script type="module" src="./src/js/main.js"></script>
