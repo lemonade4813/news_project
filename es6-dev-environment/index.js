@@ -88,8 +88,14 @@ app.post('/login', (req, res)=>{
     })
 })
 
-app.post('/newPost', (req, res) => {
+app.post('/newpost', (req, res) => {
   res.setHeader('Access-Control-Allow-origin', '*');
+  console.log(req)
+  return res.json({
+    message:"처리가 정상적으로 완료 되었습니다.."
+})
+  
+  
   console.log(req)
 })
 
