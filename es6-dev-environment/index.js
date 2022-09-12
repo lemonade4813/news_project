@@ -88,6 +88,12 @@ app.post('/login', (req, res)=>{
     })
 })
 
+app.post('/newPost', (req, res) => {
+  res.setHeader('Access-Control-Allow-origin', '*');
+  console.log(req)
+})
+
+
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)

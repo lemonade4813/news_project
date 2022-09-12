@@ -159,10 +159,11 @@
     margin-left: 20px;
   }
 
-  .uploadList li{
+  .uploadList label{
     color : #faebd7;  
     list-style: none;
     margin-bottom: 20px;
+    display: block;
   }
 
 

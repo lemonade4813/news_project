@@ -5,20 +5,28 @@
 </head>
 <body>
 <h1 style = "color:aquamarine">기사 업로드</h1>
-    <form class ="uploadList" method = "post" action="upload" enctype="multipart/form-data">
-        <li>
+    <form id = "uploadList" class ="uploadList" method = "post" enctype="multipart/form-data">
         <label>제목<input type="text"></label>
-        </li>
-        <li>
-        <label>내용<textarea></textarea>
-        </li>
-        <li>
-        <label>이미지 선택<input type="file" id="fileUpload"/>   
-        </li>
-        <li>
-            <input type ="submit">
-        </li>
+        <label>내용<textarea></textarea></label>
+        <label>이미지 선택<input type="file" id="fileUpload"/></label>   
+        <input type ="submit">
     </form>
 </body>
+<script>
+    const formElem = document.getElementById("uploadList")
+    formElem.onsubmit = async (e) => {
+      e.preventDefault();
+  
+      let response = await fetch('http://localhost:5000/newPost', {
+        method: 'POST',
+        body: new FormData(formElem)
+    });
+      
+      console.log(new FormData(formElem))
+      let result = await response.json();
+  
+      alert(result.message);
+    };
+  </script>
 <script src="./src/js/newpost.js"></script>
 </html>
