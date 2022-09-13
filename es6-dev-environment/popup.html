@@ -5,27 +5,61 @@
 </head>
 <body>
 <h1 style = "color:aquamarine">기사 업로드</h1>
-    <form id = "uploadList" class ="uploadList" method = "post" enctype="multipart/form-data">
-        <label>제목<input type="text"></label>
-        <label>내용<textarea></textarea></label>
+    <form id = "formElem" class ="uploadList" method = "post" enctype="multipart/form-data">
+        <label>제목<input type="text" id="title"></label>
+        <label>링크<input type="text" id="link"></label>
+        <label>내용<textarea id = "summary"></textarea></label>
         <label>이미지 선택<input type="file" id="fileUpload"/></label>   
         <input type ="submit">
     </form>
 </body>
 <script>
-    const formElem = document.getElementById("uploadList")
-    formElem.onsubmit = async (e) => {
+    let formData = new FormData();
+    let formElem = document.getElementById("formElem").onsubmit = async (e) => {
       e.preventDefault();
   
+      const linkRegExp = /^http(s)?:\/\//;
+
+      let title = document.getElementById("title").value;
+      let link = document.getElementById("link").value;
+      let summary = this.summary.value;
+      let file = document.querySelector('input[type="file"]').files[0].name;
+      //console.log(name)
+      //console.log(content)
+      //console.log(file)
+
+      if(!linkRegExp.test(link)){
+        alert("링크는 http:// 또는 https://로 시작하여야 합니다.");
+        return;
+      }
+
+      formData.append('title',title)
+      formData.append('link',link)
+      formData.append('summary',summary)
+      formData.append('file',file)
+
+      // formdata 객체 확인
+      // 참조 : https://velog.io/@josworks27/formData-console.log
+
+      // FormData의 key 확인
+      for (let key of formData.keys()) {
+        console.log(key);
+      }
+
+      // FormData의 value 확인
+      for (let value of formData.values()) {
+        console.log(value);
+      } 
+
       let response = await fetch('http://localhost:5000/newpost', {
         method: 'POST',
-        body: new FormData(formElem)
-    });
-      
-      console.log(new FormData(formElem))
-      let result = await response.json();
+        body : formData
+      }).then(response=> response.json())
+        .catch(error => console.error('Error:', error))
+        .then(response => console.log('Success:',JSON.stringify(response)))
+      //let result = await response.json();
   
-      alert(result.message);
+    //  alert(result.message);
     };
   </script>
 <script src="./src/js/newpost.js"></script>

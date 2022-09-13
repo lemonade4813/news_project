@@ -4,7 +4,7 @@ const port = 5000
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const config = require('./config/key')
-
+const cors = require('cors')
 const {User} = require("./User")
 
 
@@ -16,9 +16,10 @@ app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json())
 app.use(cookieParser())
 app.use(express.json())
-
+app.use(cors());
 const mongoose = require('mongoose')
 const { JsonWebTokenError } = require('jsonwebtoken')
+const { NewPost } = require('./NewPost')
 
 mongoose.connect(config.mongoURI).then(()=> console.log('MongoDB connected'))
   .catch(err=>console.log(err)) 
@@ -89,6 +90,21 @@ app.post('/login', (req, res)=>{
 })
 
 app.post('/newpost', (req, res) => {
+
+  /*
+  const newPost = new NewPost(req.body)
+  console.log(newPost)
+  */  
+  console.log(req.body)
+  const newPost = new NewPost(req.body)
+
+    newPost.save((err, doc)=>{
+        if(err) return res.json({success : false, err})
+        return res.status(200).json({
+            success: true
+        })
+    })
+ 
   res.setHeader('Access-Control-Allow-origin', '*');
   console.log(req)
   return res.json({
